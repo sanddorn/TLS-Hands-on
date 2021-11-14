@@ -11,3 +11,8 @@ www.bermuda.de:
 openssl s_client -connect www.bermuda.de:443 -servername www.bermuda.de < /dev/null 2>&1 |  sed -n '/-----BEGIN/,/-----END/p' > certificate.pem
 openssl s_client -showcerts -connect www.bermuda.de:443 -servername www.bermuda.de < /dev/null 2>&1 |  sed -n '/-----BEGIN/,/-----END/p'
 
+
+OCSP Stapling:
+
+openssl s_client -connect nexus.bermuda.de:443 -status
+
