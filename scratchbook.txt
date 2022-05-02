@@ -2,7 +2,9 @@
 openssl s_client -connect gitlab.bermuda.de:443 < /dev/null 2>&1 |  sed -n '/-----BEGIN/,/-----END/p' > certificate.pem
 # Certificate Chain
 openssl s_client -showcerts -connect gitlab.bermuda.de:443 < /dev/null 2>&1 |  sed -n '/-----BEGIN/,/-----END/p'
-# OCSP Info
+# CRL decode
+openssl crl -inform DER -text -noout -in mycrl.crl
+# OCSP Info (in der chain darf das eigene Zertifikat nicht drinstehen)
 openssl ocsp -VAfile chain.pem -issuer chain.pem -cert certificate.pem -text -url http://r3.o.lencr.org -header "HOST" "r3.o.lencr.org"
 
 
@@ -10,6 +12,7 @@ www.bermuda.de:
 
 openssl s_client -connect www.bermuda.de:443 -servername www.bermuda.de < /dev/null 2>&1 |  sed -n '/-----BEGIN/,/-----END/p' > certificate.pem
 openssl s_client -showcerts -connect www.bermuda.de:443 -servername www.bermuda.de < /dev/null 2>&1 |  sed -n '/-----BEGIN/,/-----END/p'
+
 
 
 OCSP Stapling:

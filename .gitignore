@@ -1,1 +1,4 @@
 Challenge_Data
+.idea
+*.iml
+target/
